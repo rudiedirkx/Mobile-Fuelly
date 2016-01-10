@@ -6,7 +6,7 @@ use rdx\fuelly\WebAuth;
 require __DIR__ . '/env.php';
 require __DIR__ . '/inc.functions.php';
 
-require WHERE_IS_HTTP . '/HTTP.php';
+require WHERE_IS_HTTP . '/autoload.php';
 require WHERE_IS_FUELLY . '/autoload.php';
 
 header('Content-type: text/html; charset=utf-8');
