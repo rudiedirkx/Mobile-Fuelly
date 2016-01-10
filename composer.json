@@ -1,0 +1,6 @@
+{
+    "minimum-stability": "dev",
+    "require": {
+        "rdx/fuelly": "dev-master"
+    }
+}
