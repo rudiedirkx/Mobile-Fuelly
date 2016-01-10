@@ -1,6 +1,16 @@
 {
-    "minimum-stability": "dev",
+    "name": "rdx/mobile-fuelly",
+    "description": "A simpler, more complete Mobile Fuelly",
+    "type": "project",
     "require": {
         "rdx/fuelly": "dev-master"
-    }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rudie Dirkx",
+            "email": "github@hotblocks.nl"
+        }
+    ],
+    "minimum-stability": "dev"
 }
