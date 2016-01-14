@@ -3,14 +3,10 @@
 use rdx\fuelly\Client;
 use rdx\fuelly\WebAuth;
 
-$localPsr4 = array();
 require __DIR__ . '/env.php';
 require __DIR__ . '/inc.functions.php';
 
-$autoloader = require __DIR__ . '/vendor/autoload.php';
-foreach ($localPsr4 as $namespace => $location) {
-	$autoloader->setPsr4($namespace, $location);
-}
+require __DIR__ . '/vendor/autoload.php';
 
 header('Content-type: text/html; charset=utf-8');
 
