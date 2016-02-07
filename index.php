@@ -12,7 +12,7 @@ include 'tpl.header.php';
 
 <ul>
 	<? foreach ($vehicles as $vehicle): ?>
-		<li><a href="vehicle.php?id=<?= html($vehicle['id']) ?>"><?= html($vehicle['name']) ?></a></li>
+		<li><a href="vehicle.php?id=<?= html($vehicle->id) ?>"><?= html($vehicle->name) ?></a></li>
 	<? endforeach ?>
 </ul>
 
