@@ -76,14 +76,21 @@ $max = array_reduce($fuelups, function($max, $fuelup) {
 	<div class="date end"><?= end($fuelups)->date->format('Y M') ?></div>
 </div>
 
-<ul>
-	<? foreach ($fuelups as $fuelup): ?>
-		<li>
-			<h3><?= $fuelup->date->format('j M Y') ?></h3>
-			<p>Eff.: <?= number_format($fuelup->mileage->amount, 2) ?></p>
-		</li>
-	<? endforeach ?>
-</ul>
+<? foreach (array('trend' => $vehicle->trend, 'details' => $fuelups) as $source => $list): ?>
+	<h3><?= $source ?></h3>
+	<ul>
+		<? foreach ($list as $fuelup): ?>
+			<li>
+				<h4><?= $fuelup->date->format('j M Y') ?></h4>
+				<p>
+					<?= number_format($fuelup->amount->to('l'), 2) ?> l /
+					<?= number_format($fuelup->distance->to('km'), 2) ?> km /
+					<?= number_format($fuelup->mileage->to('kmpl'), 2) ?> kmpl
+				</p>
+			</li>
+		<? endforeach ?>
+	</ul>
+<? endforeach ?>
 
 <? /*
 <details>
