@@ -58,8 +58,8 @@ $max = array_reduce($fuelups, function($max, $fuelup) {
 <h2>Fuel up</h2>
 
 <form method="post" action="?id=<?= (int) @$_GET['id'] ?>">
-	<p>Distance: <input type="number" name="distance" /> km</p>
-	<p>Fuel amount: <input type="number" name="amount" /> l</p>
+	<p>Distance: <input type="number" name="distance" /> <?= $output->distance ?></p>
+	<p>Fuel amount: <input type="number" name="amount" /> <?= $output->volume ?></p>
 	<p>Date: <input type="date" name="date" value="<?= date('Y-m-d') ?>" /></p>
 	<p><button>Save</button></p>
 </form>
@@ -83,9 +83,9 @@ $max = array_reduce($fuelups, function($max, $fuelup) {
 			<li>
 				<h4><?= $fuelup->date->format('j M Y') ?></h4>
 				<p>
-					<?= number_format($fuelup->amount->to('l'), 2) ?> l /
-					<?= number_format($fuelup->distance->to('km'), 2) ?> km /
-					<?= number_format($fuelup->mileage->to('kmpl'), 2) ?> kmpl
+					<?= $output->formatVolume($fuelup->amount) ?> /
+					<?= $output->formatDistance($fuelup->distance) ?> /
+					<?= $output->formatMileage($fuelup->mileage) ?>
 				</p>
 			</li>
 		<? endforeach ?>
