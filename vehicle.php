@@ -16,15 +16,15 @@ $base = function($val) {
 };
 
 $fuelups = $vehicle->trend; // $client->getFuelUpsWithIds($vehicle, 60);
-$stats['min_mileage'] = $stats['min_distance'] = $stats['min_amount'] = PHP_INT_MAX;
-$stats['max_mileage'] = $stats['max_distance'] = $stats['max_amount'] = 0;
+$stats['min_mileage'] = $stats['min_distance'] = $stats['min_volume'] = PHP_INT_MAX;
+$stats['max_mileage'] = $stats['max_distance'] = $stats['max_volume'] = 0;
 foreach ($fuelups as $fuelup) {
 	$stats['min_mileage'] = min($stats['min_mileage'], $base($fuelup->mileage));
 	$stats['min_distance'] = min($stats['min_distance'], $base($fuelup->distance));
-	$stats['min_amount'] = min($stats['min_amount'], $base($fuelup->amount));
+	$stats['min_volume'] = min($stats['min_volume'], $base($fuelup->volume));
 	$stats['max_mileage'] = max($stats['max_mileage'], $base($fuelup->mileage));
 	$stats['max_distance'] = max($stats['max_distance'], $base($fuelup->distance));
-	$stats['max_amount'] = max($stats['max_amount'], $base($fuelup->amount));
+	$stats['max_volume'] = max($stats['max_volume'], $base($fuelup->volume));
 }
 
 $max = function($qt, $fuelup) use ($base, $stats) {
@@ -130,8 +130,8 @@ $min = function($qt, $fuelup) use ($base, $stats) {
 				<td>
 					<?= $fuelup->date->format('j M Y') ?>
 				</td>
-				<td class="<?= $max('amount', $fuelup) . ' ' . $min('amount', $fuelup) ?>">
-					<?= $output->formatVolume($fuelup->amount) ?>
+				<td class="<?= $max('volume', $fuelup) . ' ' . $min('volume', $fuelup) ?>">
+					<?= $output->formatVolume($fuelup->volume) ?>
 				</td>
 				<td class="<?= $max('distance', $fuelup) . ' ' . $min('distance', $fuelup) ?>">
 					<?= $output->formatDistance($fuelup->distance) ?>
