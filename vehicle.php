@@ -11,13 +11,53 @@ if ( isset($_POST['distance'], $_POST['amount'], $_POST['date']) ) {
 
 include 'tpl.header.php';
 
-$fuelups = $client->getFuelUpsWithIds($vehicle, 60);
-$max = array_reduce($fuelups, function($max, $fuelup) {
-	return max($max, $fuelup->mileage->amount);
-}, 0);
+$base = function($val) {
+	return round($val->to('base'), 1);
+};
+
+$fuelups = $vehicle->trend; // $client->getFuelUpsWithIds($vehicle, 60);
+$stats['min_mileage'] = $stats['min_distance'] = $stats['min_amount'] = PHP_INT_MAX;
+$stats['max_mileage'] = $stats['max_distance'] = $stats['max_amount'] = 0;
+foreach ($fuelups as $fuelup) {
+	$stats['min_mileage'] = min($stats['min_mileage'], $base($fuelup->mileage));
+	$stats['min_distance'] = min($stats['min_distance'], $base($fuelup->distance));
+	$stats['min_amount'] = min($stats['min_amount'], $base($fuelup->amount));
+	$stats['max_mileage'] = max($stats['max_mileage'], $base($fuelup->mileage));
+	$stats['max_distance'] = max($stats['max_distance'], $base($fuelup->distance));
+	$stats['max_amount'] = max($stats['max_amount'], $base($fuelup->amount));
+}
+
+$max = function($qt, $fuelup) use ($base, $stats) {
+	return $stats["max_$qt"] == $base($fuelup->$qt) ? 'max' : '';
+};
+$min = function($qt, $fuelup) use ($base, $stats) {
+	return $stats["min_$qt"] == $base($fuelup->$qt) ? 'min' : '';
+};
 
 ?>
 <style>
+.fuelups-table {
+	border-collapse: collapse;
+	border-spacing: 0;
+
+}
+.fuelups-table th,
+.fuelups-table td {
+	padding: 6px;
+	border: solid 2px #ddd;
+}
+.fuelups-table th.sort {
+	background-color: #e7e7e7;
+}
+.fuelups-table td {
+	text-align: right;
+}
+.fuelups-table td.min {
+	background-color: #fee;
+}
+.fuelups-table td.max {
+	background-color: #efe;
+}
 .fuelups-history {
 	width: 100%;
 	overflow: auto;
@@ -70,26 +110,38 @@ $max = array_reduce($fuelups, function($max, $fuelup) {
 	<div class="date start"><?= reset($fuelups)->date->format('Y M') ?></div>
 	<div class="bars">
 		<? foreach ($fuelups as $fuelup): ?>
-			<div class="bar" style="height: <?= number_format($fuelup->mileage->amount / $max * 100, 1) ?>%"></div>
+			<div class="bar" style="height: <?= number_format($fuelup->mileage->to('kmpl') / $stats['max_mileage'] * 100, 1) ?>%"></div>
 		<? endforeach ?>
 	</div>
 	<div class="date end"><?= end($fuelups)->date->format('Y M') ?></div>
 </div>
 
-<? foreach (array('trend' => $vehicle->trend, 'details' => $fuelups) as $source => $list): ?>
+<? foreach (array(/*'trend' => $vehicle->trend,*/ 'details' => $fuelups) as $source => $list): ?>
 	<h3><?= $source ?></h3>
-	<ul>
+	<table class="fuelups-table">
+		<tr>
+			<th class="sort">Date</th>
+			<th>Amount</th>
+			<th>Distance</th>
+			<th>Mileage</th>
+		</tr>
 		<? foreach ($list as $fuelup): ?>
-			<li>
-				<h4><?= $fuelup->date->format('j M Y') ?></h4>
-				<p>
-					<?= $output->formatVolume($fuelup->amount) ?> /
-					<?= $output->formatDistance($fuelup->distance) ?> /
+			<tr>
+				<td>
+					<?= $fuelup->date->format('j M Y') ?>
+				</td>
+				<td class="<?= $max('amount', $fuelup) . ' ' . $min('amount', $fuelup) ?>">
+					<?= $output->formatVolume($fuelup->amount) ?>
+				</td>
+				<td class="<?= $max('distance', $fuelup) . ' ' . $min('distance', $fuelup) ?>">
+					<?= $output->formatDistance($fuelup->distance) ?>
+				</td>
+				<td class="<?= $max('mileage', $fuelup) . ' ' . $min('mileage', $fuelup) ?>">
 					<?= $output->formatMileage($fuelup->mileage) ?>
-				</p>
-			</li>
+				</td>
+			</tr>
 		<? endforeach ?>
-	</ul>
+	</table>
 <? endforeach ?>
 
 <? /*
