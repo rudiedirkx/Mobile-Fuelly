@@ -1,5 +1,10 @@
 <?php
 
+use rdx\units\Length;
+use rdx\units\Mileage;
+use rdx\units\Quantity;
+use rdx\units\Volume;
+
 require 'inc.bootstrap.php';
 
 $vehicle = $client->getVehicle($_GET['id']);
@@ -11,7 +16,7 @@ if ( isset($_POST['distance'], $_POST['amount'], $_POST['date']) ) {
 
 include 'tpl.header.php';
 
-$base = function($val) {
+$base = function(Quantity $val) {
 	return round($val->to('base'), 1);
 };
 
@@ -34,6 +39,16 @@ $min = function($qt, $fuelup) use ($base, $stats) {
 	return $stats["min_$qt"] == $base($fuelup->$qt) ? 'min' : '';
 };
 
+$avg = function($qt, $fuelups) use ($base) {
+	return array_reduce($fuelups, function($total, $fuelup) use ($qt, $base) {
+		return $total + $base($fuelup->$qt);
+	}, 0) / count($fuelups);
+};
+
+$stats['avg_mileage'] = $avg('mileage', $fuelups);
+$stats['avg_distance'] = $avg('distance', $fuelups);
+$stats['avg_volume'] = $avg('volume', $fuelups);
+
 ?>
 <style>
 .fuelups-table {
@@ -49,6 +64,10 @@ $min = function($qt, $fuelup) use ($base, $stats) {
 .fuelups-table th.sort {
 	background-color: #e7e7e7;
 }
+.fuelups-table tr.avg td {
+	border-bottom-width: 3px;
+	border-bottom-color: #bbb;
+}
 .fuelups-table td {
 	text-align: right;
 }
@@ -62,6 +81,7 @@ $min = function($qt, $fuelup) use ($base, $stats) {
 	width: 100%;
 	overflow: auto;
 	padding-bottom: 1px;
+	margin-bottom: 1em;
 	border-bottom: solid 2px black;
 	display: -webkit-box;
 	display: flex;
@@ -116,33 +136,36 @@ $min = function($qt, $fuelup) use ($base, $stats) {
 	<div class="date end"><?= end($fuelups)->date->format('Y M') ?></div>
 </div>
 
-<? foreach (array(/*'trend' => $vehicle->trend,*/ 'details' => $fuelups) as $source => $list): ?>
-	<h3><?= $source ?></h3>
-	<table class="fuelups-table">
+<table class="fuelups-table">
+	<tr>
+		<th class="sort">Date</th>
+		<th>Amount</th>
+		<th>Distance</th>
+		<th>Mileage</th>
+	</tr>
+	<tr class="avg">
+		<td>Avg:</td>
+		<td><?= $output->formatVolume(new Volume($stats['avg_volume'], Volume::BASE_UNIT)) ?></td>
+		<td><?= $output->formatDistance(new Length($stats['avg_distance'], Length::BASE_UNIT)) ?></td>
+		<td><?= $output->formatMileage(new Mileage($stats['avg_mileage'], Mileage::BASE_UNIT)) ?></td>
+	</tr>
+	<? foreach ($fuelups as $fuelup): ?>
 		<tr>
-			<th class="sort">Date</th>
-			<th>Amount</th>
-			<th>Distance</th>
-			<th>Mileage</th>
+			<td>
+				<?= $fuelup->date->format('j M Y') ?>
+			</td>
+			<td class="<?= $max('volume', $fuelup) . ' ' . $min('volume', $fuelup) ?>">
+				<?= $output->formatVolume($fuelup->volume) ?>
+			</td>
+			<td class="<?= $max('distance', $fuelup) . ' ' . $min('distance', $fuelup) ?>">
+				<?= $output->formatDistance($fuelup->distance) ?>
+			</td>
+			<td class="<?= $max('mileage', $fuelup) . ' ' . $min('mileage', $fuelup) ?>">
+				<?= $output->formatMileage($fuelup->mileage) ?>
+			</td>
 		</tr>
-		<? foreach ($list as $fuelup): ?>
-			<tr>
-				<td>
-					<?= $fuelup->date->format('j M Y') ?>
-				</td>
-				<td class="<?= $max('volume', $fuelup) . ' ' . $min('volume', $fuelup) ?>">
-					<?= $output->formatVolume($fuelup->volume) ?>
-				</td>
-				<td class="<?= $max('distance', $fuelup) . ' ' . $min('distance', $fuelup) ?>">
-					<?= $output->formatDistance($fuelup->distance) ?>
-				</td>
-				<td class="<?= $max('mileage', $fuelup) . ' ' . $min('mileage', $fuelup) ?>">
-					<?= $output->formatMileage($fuelup->mileage) ?>
-				</td>
-			</tr>
-		<? endforeach ?>
-	</table>
-<? endforeach ?>
+	<? endforeach ?>
+</table>
 
 <? /*
 <details>
