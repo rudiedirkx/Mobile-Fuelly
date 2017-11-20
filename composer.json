@@ -3,8 +3,8 @@
     "description": "A simpler, more complete Mobile Fuelly",
     "type": "project",
     "require": {
-        "rdx/fuelly": "dev-master",
-        "rdx/units": "dev-master"
+        "rdx/fuelly": "^1.0",
+        "rdx/units": "^1.0"
     },
     "license": "MIT",
     "authors": [
@@ -12,6 +12,5 @@
             "name": "Rudie Dirkx",
             "email": "github@hotblocks.nl"
         }
-    ],
-    "minimum-stability": "dev"
+    ]
 }

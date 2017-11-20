@@ -4,26 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1f52f1e4824af5cbc8252ed392625939",
-    "content-hash": "a1ff5e307e7467ce9fed6c7adb740351",
+    "content-hash": "1534c24f2c0afe31118f4e414eac46eb",
     "packages": [
         {
             "name": "rdx/fuelly",
-            "version": "dev-master",
+            "version": "1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rudiedirkx/Fuelly.git",
-                "reference": "957f1fde60e80aa7607726f5722fac0eb1c57415"
+                "reference": "d1f7c9be80569858e8982e0f8091d0d4ee17b3cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rudiedirkx/Fuelly/zipball/957f1fde60e80aa7607726f5722fac0eb1c57415",
-                "reference": "957f1fde60e80aa7607726f5722fac0eb1c57415",
+                "url": "https://api.github.com/repos/rudiedirkx/Fuelly/zipball/d1f7c9be80569858e8982e0f8091d0d4ee17b3cf",
+                "reference": "d1f7c9be80569858e8982e0f8091d0d4ee17b3cf",
                 "shasum": ""
             },
             "require": {
-                "rdx/http": "dev-master",
-                "rdx/units": "dev-master"
+                "rdx/http": "^1.0",
+                "rdx/units": "^1.0"
             },
             "type": "library",
             "autoload": {
@@ -42,11 +41,11 @@
                 }
             ],
             "description": "Fuelly fake 'API' client",
-            "time": "2016-09-19 19:44:57"
+            "time": "2017-11-20T10:55:59+00:00"
         },
         {
             "name": "rdx/http",
-            "version": "dev-master",
+            "version": "1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rudiedirkx/HTTP.git",
@@ -75,11 +74,11 @@
                 }
             ],
             "description": "A simple HTTP wrapper around CURL, with request and response classes.",
-            "time": "2016-10-14 19:20:34"
+            "time": "2016-10-14T19:20:34+00:00"
         },
         {
             "name": "rdx/units",
-            "version": "dev-master",
+            "version": "1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rudiedirkx/Units.git",
@@ -111,16 +110,13 @@
                 }
             ],
             "description": "Convert between units",
-            "time": "2017-04-29 22:43:57"
+            "time": "2017-04-29T22:43:57+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "dev",
-    "stability-flags": {
-        "rdx/fuelly": 20,
-        "rdx/units": 20
-    },
+    "minimum-stability": "stable",
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
