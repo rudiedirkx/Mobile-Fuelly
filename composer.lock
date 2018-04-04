@@ -11,12 +11,12 @@
             "version": "1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rudiedirkx/Fuelly.git",
+                "url": "https://github.com/rudiedirkx/fuelly.git",
                 "reference": "d1f7c9be80569858e8982e0f8091d0d4ee17b3cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rudiedirkx/Fuelly/zipball/d1f7c9be80569858e8982e0f8091d0d4ee17b3cf",
+                "url": "https://api.github.com/repos/rudiedirkx/fuelly/zipball/d1f7c9be80569858e8982e0f8091d0d4ee17b3cf",
                 "reference": "d1f7c9be80569858e8982e0f8091d0d4ee17b3cf",
                 "shasum": ""
             },
@@ -48,12 +48,12 @@
             "version": "1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rudiedirkx/HTTP.git",
+                "url": "https://github.com/rudiedirkx/http.git",
                 "reference": "67611de8eceb5c7ffb77d0fe6f6bf3e8ca9ad59a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rudiedirkx/HTTP/zipball/67611de8eceb5c7ffb77d0fe6f6bf3e8ca9ad59a",
+                "url": "https://api.github.com/repos/rudiedirkx/http/zipball/67611de8eceb5c7ffb77d0fe6f6bf3e8ca9ad59a",
                 "reference": "67611de8eceb5c7ffb77d0fe6f6bf3e8ca9ad59a",
                 "shasum": ""
             },
@@ -81,12 +81,12 @@
             "version": "1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rudiedirkx/Units.git",
+                "url": "https://github.com/rudiedirkx/units.git",
                 "reference": "f33b1f3274f007b62299d64a32d31c6d7c131806"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rudiedirkx/Units/zipball/f33b1f3274f007b62299d64a32d31c6d7c131806",
+                "url": "https://api.github.com/repos/rudiedirkx/units/zipball/f33b1f3274f007b62299d64a32d31c6d7c131806",
                 "reference": "f33b1f3274f007b62299d64a32d31c6d7c131806",
                 "shasum": ""
             },

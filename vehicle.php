@@ -10,7 +10,13 @@ require 'inc.bootstrap.php';
 $vehicle = $client->getVehicle($_GET['id']);
 
 if ( isset($_POST['distance'], $_POST['amount'], $_POST['date']) ) {
-	print_r($_POST);
+	$client->addFuelUp([
+		'usercar_id' => $_GET['id'],
+		'miles_last_fuelup' => $_POST['distance'],
+		'amount' => $_POST['amount'],
+		'fuelup_date' => implode('/', array_reverse(explode('-', $_POST['date']))),
+	]);
+	header('Location: vehicle.php?id=' . $_GET['id']);
 	exit;
 }
 
@@ -118,8 +124,8 @@ $stats['avg_volume'] = $avg('volume', $fuelups);
 <h2>Fuel up</h2>
 
 <form method="post" action="?id=<?= (int) @$_GET['id'] ?>">
-	<p>Distance: <input type="number" name="distance" /> <?= $output->distance ?></p>
-	<p>Fuel amount: <input type="number" name="amount" /> <?= $output->volume ?></p>
+	<p>Distance: <input type="number" name="distance" step="0.1" /> <?= $output->distance ?></p>
+	<p>Fuel amount: <input type="number" name="amount" step="0.01" /> <?= $output->volume ?></p>
 	<p>Date: <input type="date" name="date" value="<?= date('Y-m-d') ?>" /></p>
 	<p><button>Save</button></p>
 </form>
