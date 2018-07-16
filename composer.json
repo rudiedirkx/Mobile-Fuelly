@@ -3,7 +3,7 @@
     "description": "A simpler, more complete Mobile Fuelly",
     "type": "project",
     "require": {
-        "rdx/fuelly": "^1.0",
+        "rdx/fuelly": "^1.1",
         "rdx/units": "^1.0"
     },
     "license": "MIT",
